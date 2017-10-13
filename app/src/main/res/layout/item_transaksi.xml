@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="40dp"
+    android:paddingRight="16dp"
+    android:paddingEnd="16dp"
+    android:paddingStart="5dp"
+    android:paddingLeft="5dp">
+
+    <LinearLayout
+        android:clickable="true"
+        android:id="@+id/btn_delete"
+        android:layout_gravity="center_vertical"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:padding="10dp"
+        android:gravity="center">
+
+        <ImageView
+            android:src="@drawable/ic_add"
+            android:scaleType="centerInside"
+            android:rotation="45"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/view_circle_calendar_selected"/>
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/txt_nama"
+        android:layout_marginLeft="47dp"
+        android:layout_marginStart="47dp"
+        android:layout_gravity="center_vertical"
+        android:textColor="@android:color/black"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Beli makan"/>
+
+    <TextView
+        android:id="@+id/txt_jumlah"
+        android:layout_gravity="end|center_vertical"
+        android:textColor="@android:color/black"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Rp. 15.000"/>
+
+    <View
+        android:layout_marginLeft="47dp"
+        android:layout_marginStart="47dp"
+        android:layout_gravity="bottom"
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="@android:color/darker_gray"/>
+
+</FrameLayout>
+</layout>

@@ -1,0 +1,55 @@
+<resources>
+    <string name="app_name">My Wallet</string>
+
+
+    <string-array name="arr_month">
+        <item>January</item>
+        <item>February</item>
+        <item>March</item>
+        <item>April</item>
+        <item>May</item>
+        <item>June</item>
+        <item>July</item>
+        <item>August</item>
+        <item>September</item>
+        <item>October</item>
+        <item>November</item>
+        <item>Desember</item>
+    </string-array>
+
+    <string-array name="arr_day">
+        <item>Sunday</item>
+        <item>Monday</item>
+        <item>Tuesday</item>
+        <item>Wednesday</item>
+        <item>Thursday</item>
+        <item>Friday</item>
+        <item>Saturday</item>
+    </string-array>
+
+    <string-array name="arr_daay_short">
+        <item>Sun</item>
+        <item>Mon</item>
+        <item>Tue</item>
+        <item>Wed</item>
+        <item>Thu</item>
+        <item>Fri</item>
+        <item>Sat</item>
+    </string-array>
+
+    <string name="prefix_today">Today</string>
+    <string name="prefix_yesterday">Yesterday</string>
+
+    <!-- payment-->
+    <string name="how_much">How much money you spent?</string>
+    <string name="what_are_you_buying">What are you buying now?</string>
+    <string name="you_have_to_save">You have to save your money next time!</string>
+
+    <!-- income -->
+    <string name="how_much_income">How much money do you get?</string>
+    <string name="where_this_come_from">Where this money came from?</string>
+    <string name="good_job">Good job Mate!</string>
+
+    <string name="cannot_empty">Hey mate.. If you want to add something, please fill first.</string>
+
+</resources>

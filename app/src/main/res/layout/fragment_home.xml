@@ -1,0 +1,398 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
+<android.support.design.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:scaleType="centerCrop"
+        android:id="@+id/img_background"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#59000000"/>
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="#D9009de0"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
+
+        <LinearLayout
+            android:layout_marginLeft="5dp"
+            android:layout_marginStart="5dp"
+            android:gravity="center_vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:fontFamily="sans-serif-medium"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Today"
+                android:id="@+id/txt_day"
+                android:textColor="@android:color/white"
+                android:textSize="12sp"/>
+
+            <TextView
+                android:fontFamily="sans-serif-medium"
+                android:id="@+id/txt_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="January 2018"
+                android:textColor="@android:color/white"
+                android:textSize="20sp"/>
+
+        </LinearLayout>
+    </android.support.v7.widget.Toolbar>
+
+    <LinearLayout
+        android:layout_marginTop="?attr/actionBarSize"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <android.support.v4.view.ViewPager
+            android:background="#D9FFFFFF"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:id="@+id/pager_calendar"/>
+
+        <android.support.v4.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <android.support.v7.widget.CardView
+                    android:id="@+id/container_pemasukan"
+                    app:cardElevation="0dp"
+                    android:layout_margin="10dp"
+                    android:layout_width="match_parent"
+                    app:cardCornerRadius="3dp"
+                    android:layout_height="wrap_content"
+                    app:cardBackgroundColor="#D9FFFFFF">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <RelativeLayout
+                            android:id="@+id/btn_expand_income"
+                            android:clickable="true"
+                            android:foreground="?android:attr/selectableItemBackground"
+                            android:layout_width="match_parent"
+                            android:layout_height="48dp">
+
+                            <ImageView
+                                android:padding="10dp"
+                                android:layout_centerVertical="true"
+                                android:layout_width="48dp"
+                                android:layout_height="48dp"
+                                android:scaleType="center"
+                                android:src="@drawable/ic_attach_money"
+                                android:tint="@color/green_text"/>
+
+                            <TextView
+                                android:layout_marginLeft="50dp"
+                                android:layout_marginStart="50dp"
+                                android:layout_centerVertical="true"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textSize="14sp"
+                                android:fontFamily="sans-serif-medium"
+                                android:textStyle="normal"
+                                android:textColor="@android:color/black"
+                                android:text="Debit Balance"/>
+
+                            <TextView
+                                android:layout_alignParentRight="true"
+                                android:layout_alignParentEnd="true"
+                                android:layout_marginRight="50dp"
+                                android:layout_marginEnd="50dp"
+                                android:layout_centerVertical="true"
+                                android:id="@+id/txt_title_income"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textSize="14sp"
+                                android:fontFamily="sans-serif-medium"
+                                android:textStyle="normal"
+                                android:textColor="@android:color/black"
+                                android:text="$ 0"/>
+
+                            <ImageView
+                                android:id="@+id/img_arrow_income"
+                                android:padding="10dp"
+                                android:layout_width="48dp"
+                                android:layout_height="48dp"
+                                android:src="@drawable/ic_arrow_down_black"
+                                android:layout_alignParentTop="true"
+                                android:layout_alignParentRight="true"
+                                android:layout_alignParentEnd="true" />
+
+                        </RelativeLayout>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="0.5dp"
+                            android:background="@android:color/darker_gray"/>
+
+                        <candra.bukupengeluaran.Supports.Utils.SimpleViewAnimator
+                            android:visibility="gone"
+                            android:id="@+id/container_list_income"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+
+                            <android.support.v7.widget.RecyclerView
+                                android:scrollbars="vertical"
+                                android:id="@+id/list_income"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"/>
+
+                            <View
+                                android:id="@+id/container_kekosongan_income"
+                                android:layout_width="match_parent"
+                                android:layout_height="40dp"/>
+
+                        </candra.bukupengeluaran.Supports.Utils.SimpleViewAnimator>
+
+                    </LinearLayout>
+
+                </android.support.v7.widget.CardView>
+
+                <android.support.v7.widget.CardView
+                    android:id="@+id/container_pengeluaran"
+                    app:cardElevation="0dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:layout_width="match_parent"
+                    app:cardCornerRadius="3dp"
+                    app:cardBackgroundColor="#D9FFFFFF"
+                    android:layout_height="wrap_content">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <RelativeLayout
+                            android:id="@+id/btn_expand"
+                            android:clickable="true"
+                            android:foreground="?android:attr/selectableItemBackground"
+                            android:layout_width="match_parent"
+                            android:layout_height="48dp">
+
+                            <ImageView
+                                android:padding="10dp"
+                                android:layout_centerVertical="true"
+                                android:layout_width="48dp"
+                                android:layout_height="48dp"
+                                android:scaleType="center"
+                                android:src="@drawable/ic_money_off"
+                                android:tint="@color/red"/>
+
+                            <TextView
+                                android:layout_marginLeft="50dp"
+                                android:layout_marginStart="50dp"
+                                android:layout_centerVertical="true"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textSize="14sp"
+                                android:fontFamily="sans-serif-medium"
+                                android:textStyle="normal"
+                                android:textColor="@android:color/black"
+                                android:text="Credit Balance"/>
+
+                            <TextView
+                                android:layout_alignParentRight="true"
+                                android:layout_alignParentEnd="true"
+                                android:layout_marginRight="50dp"
+                                android:layout_marginEnd="50dp"
+                                android:layout_centerVertical="true"
+                                android:id="@+id/txt_title_parent"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textSize="14sp"
+                                android:fontFamily="sans-serif-medium"
+                                android:textStyle="normal"
+                                android:textColor="@android:color/black"
+                                android:text="$ 0"/>
+
+                            <ImageView
+                                android:id="@+id/img_arrow"
+                                android:padding="10dp"
+                                android:layout_centerVertical="true"
+                                android:layout_width="48dp"
+                                android:layout_height="48dp"
+                                android:layout_alignParentRight="true"
+                                android:layout_alignParentEnd="true"
+                                android:src="@drawable/ic_arrow_down_black"/>
+
+                        </RelativeLayout>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="0.5dp"
+                            android:background="@android:color/darker_gray"/>
+
+                        <candra.bukupengeluaran.Supports.Utils.SimpleViewAnimator
+                            android:visibility="gone"
+                            android:id="@+id/container_list"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+
+                            <android.support.v7.widget.RecyclerView
+                                android:scrollbars="vertical"
+                                android:id="@+id/list"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"/>
+
+                            <View
+                                android:id="@+id/container_kekosongan"
+                                android:layout_width="match_parent"
+                                android:layout_height="40dp"/>
+
+                        </candra.bukupengeluaran.Supports.Utils.SimpleViewAnimator>
+
+                    </LinearLayout>
+
+                </android.support.v7.widget.CardView>
+
+            </LinearLayout>
+
+        </android.support.v4.widget.NestedScrollView>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:animateLayoutChanges="true"
+        android:visibility="invisible"
+        android:id="@+id/container_fab_income"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:layout_gravity="bottom|end"
+        android:layout_marginRight="16dp"
+        android:layout_marginBottom="160dp"
+        android:layout_marginEnd="16dp"
+        android:orientation="horizontal">
+
+        <android.support.v7.widget.CardView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:cardBackgroundColor="@android:color/white"
+            app:cardCornerRadius="3dp"
+            app:cardElevation="0dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginEnd="5dp">
+            <TextView
+                android:textColor="@color/grey_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Income"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:textStyle="bold"
+                android:paddingRight="16dp"
+                android:paddingLeft="16dp"
+                android:paddingBottom="5dp"
+                android:paddingTop="5dp" />
+        </android.support.v7.widget.CardView>
+
+        <android.support.design.widget.FloatingActionButton
+            app:elevation="0dp"
+            android:scaleType="center"
+            android:id="@+id/fab_income"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_attach_money"
+            app:backgroundTint="@color/green_text" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:animateLayoutChanges="true"
+        android:visibility="invisible"
+        android:id="@+id/container_fab_payment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:layout_gravity="bottom|end"
+        android:layout_marginRight="16dp"
+        android:layout_marginBottom="90dp"
+        android:layout_marginEnd="16dp"
+        android:orientation="horizontal">
+
+        <android.support.v7.widget.CardView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:cardBackgroundColor="@android:color/white"
+            app:cardCornerRadius="3dp"
+            app:cardElevation="0dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginEnd="5dp">
+            <TextView
+                android:textColor="@color/grey_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Payment"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:textStyle="bold"
+                android:paddingRight="16dp"
+                android:paddingLeft="16dp"
+                android:paddingBottom="5dp"
+                android:paddingTop="5dp" />
+        </android.support.v7.widget.CardView>
+
+        <android.support.design.widget.FloatingActionButton
+            app:elevation="0dp"
+            android:scaleType="center"
+            android:id="@+id/fab_payment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_money_off"
+            app:backgroundTint="@color/red" />
+
+    </LinearLayout>
+
+    <TextView
+        android:text="'Beware of little expenses. A small leak will sink a great ship.'"
+        android:textStyle="italic"
+        android:layout_marginLeft="30dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginBottom="30dp"
+        android:layout_marginRight="80dp"
+        android:layout_marginEnd="80dp"
+        android:id="@+id/txt_quote"
+        android:layout_width="match_parent"
+        android:textSize="17sp"
+        android:textColor="@android:color/white"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"/>
+
+    <android.support.design.widget.FloatingActionButton
+        app:backgroundTint="#ff5722"
+        android:scaleType="center"
+        android:id="@+id/fab_tambah"
+        android:layout_width="56dp"
+        android:layout_height="56dp"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="16dp"
+        android:src="@drawable/ic_add" />
+
+</android.support.design.widget.CoordinatorLayout>
+</layout>

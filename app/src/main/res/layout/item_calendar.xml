@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+    <LinearLayout
+        android:background="?attr/selectableItemBackgroundBorderless"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:orientation="vertical" android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:paddingTop="10dp">
+
+        <TextView
+            android:id="@+id/txt_hari"
+            android:layout_gravity="center_horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="12sp"
+            android:fontFamily="sans-serif"
+            android:textStyle="normal"
+            android:textColor="#80000000"
+            android:gravity="center_horizontal"
+            android:text="Sun"
+            />
+
+        <TextView
+            android:layout_marginTop="13dp"
+            android:id="@+id/txt_tanggal"
+            android:layout_gravity="center"
+            android:layout_width="34dp"
+            android:gravity="center"
+            android:layout_height="34dp"
+            android:textSize="12sp"
+            android:fontFamily="sans-serif-medium"
+            android:textStyle="normal"
+            android:background="@drawable/view_selector_calendar"
+            android:textColor="@drawable/text_selector_calendar"
+            android:text="31"
+            />
+
+    </LinearLayout>
+</layout>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#009de0</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#009de0</color>
+    <color name="bg_layout">#f1f2f4</color>
+    <color name="bg_buttton">#f97b0c</color>
+    <color name="hint_color">#40445066</color>
+
+    <color name="orange">#f97b0c</color>
+    <color name="grey_text">#80000000</color>
+    <color name="black_text">#d9000000</color>
+    <color name="tab_color">#009de0</color>
+    <color name="green_text">#4caf50</color>
+    <color name="grey_line">#e5e5e5</color>
+    <color name="background_activity">#f1f2f4</color><!-- #f3f3f3-->
+    <color name="navigationBarColor">#009de0</color>
+    <color name="blue_text">#009de0</color>
+    <color name="yellow">#ff9f00</color>
+    <color name="red">#f44336</color>
+    <color name="inactive_tab_text_color">#b0b4bd</color>
+
+    <color name="search_layover_bg">#50000000</color>
+</resources>
