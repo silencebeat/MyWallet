@@ -1,8 +1,7 @@
 ## MyWallet
 Aplikasi pencatan pemasukan dan pengeluaran uang
 ## Preview
-![](https://github.com/silencebeat/MyWallet/blob/master/Screenshot1.png)![](https://github.com/silencebeat/MyWallet/blob/master/Screenshot2.png)
-![](https://github.com/silencebeat/MyWallet/blob/master/Screenshot4.png)![](https://github.com/silencebeat/MyWallet/blob/master/Screenshot6.png)
+![](https://github.com/silencebeat/MyWallet/blob/master/banner.png)
 ## Main Library
 - [Glide](https://github.com/bumptech/glide)
 - [MPAndroidChart](https://github.com/PhilJay/MPAndroidChart)
