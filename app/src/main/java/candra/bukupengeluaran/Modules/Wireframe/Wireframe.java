@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 
+import candra.bukupengeluaran.Views.Activities.CurrencyActivity;
 import candra.bukupengeluaran.Views.Activities.HomeActivity;
 import candra.bukupengeluaran.Views.Activities.PrivacyPolicyActivity;
 
@@ -33,6 +34,12 @@ public class Wireframe {
 
     public void toPrivacyPolicyView(Context context){
         Intent intent = new Intent(context, PrivacyPolicyActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        context.startActivity(intent);
+    }
+
+    public void toCurrencyView(Context context){
+        Intent intent = new Intent(context, CurrencyActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         context.startActivity(intent);
     }

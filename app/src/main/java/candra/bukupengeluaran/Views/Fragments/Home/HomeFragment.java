@@ -19,6 +19,9 @@ import android.widget.ImageView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 
+import java.math.BigDecimal;
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -27,6 +30,7 @@ import java.util.Observable;
 import java.util.Observer;
 
 import candra.bukupengeluaran.Entities.List.ListTheme;
+import candra.bukupengeluaran.Entities.Model.Currency;
 import candra.bukupengeluaran.Entities.Model.QuoteModel;
 import candra.bukupengeluaran.Entities.Model.Quotes;
 import candra.bukupengeluaran.Entities.Model.TransaksiModel;
@@ -71,6 +75,7 @@ public class HomeFragment extends Fragment implements OnCalendarSelectedListener
     long millisSelected;
     ListTheme listTheme;
     Handler handler;
+    String currencySymbol;
 
     @Override
     public void onDestroy() {
@@ -91,6 +96,7 @@ public class HomeFragment extends Fragment implements OnCalendarSelectedListener
         handler = new Handler();
         listTheme = new ListTheme();
         KEYWORD = listTheme.getArrayList().get(0).getName();
+        currencySymbol = getCurrencySymbol();
 
         if (simpleCache.getString(StaticVariable.THEME_SELECTED_NAME)!= null){
             KEYWORD = simpleCache.getString(StaticVariable.THEME_SELECTED_NAME);
@@ -197,7 +203,7 @@ public class HomeFragment extends Fragment implements OnCalendarSelectedListener
         ArrayList<TransaksiModel> arrayList = new ArrayList(DBHelper.with(this).getPayment(millis));
 
         if (arrayList.isEmpty()){
-            content.txtTitleParent.setText("$0");
+            content.txtTitleParent.setText(currencySymbol+"0");
         }else{
             Number number = DBHelper.with(this).getTotalByDay(millis, 0);
             content.txtTitleParent.setText(numberFormat(number));
@@ -207,7 +213,7 @@ public class HomeFragment extends Fragment implements OnCalendarSelectedListener
                 TransaksiViewHolder.class, TransaksiModel.class, arrayList) {
             @Override
             protected void bindView(TransaksiViewHolder holder, TransaksiModel model, int position) {
-                holder.onBind(model, HomeFragment.this);
+                holder.onBind(model, HomeFragment.this, currencySymbol);
             }
         };
 
@@ -220,7 +226,7 @@ public class HomeFragment extends Fragment implements OnCalendarSelectedListener
         ArrayList<TransaksiModel> arrayList = new ArrayList(DBHelper.with(this).getIncome(millis));
 
         if (arrayList.isEmpty()){
-            content.txtTitleIncome.setText("$0");
+            content.txtTitleIncome.setText(currencySymbol+"0");
         }else{
             Number number = DBHelper.with(this).getTotalByDay(millis, 1);
             content.txtTitleIncome.setText(numberFormat(number));
@@ -230,7 +236,7 @@ public class HomeFragment extends Fragment implements OnCalendarSelectedListener
                 TransaksiViewHolder.class, TransaksiModel.class, arrayList) {
             @Override
             protected void bindView(TransaksiViewHolder holder, TransaksiModel model, int position) {
-                holder.onBind(model, HomeFragment.this);
+                holder.onBind(model, HomeFragment.this, currencySymbol);
             }
         };
 
@@ -239,9 +245,24 @@ public class HomeFragment extends Fragment implements OnCalendarSelectedListener
         content.listIncome.setAdapter(adapter);
     }
 
+    private String getCurrencySymbol(){
+        String currency = "$";
+
+        if (simpleCache.getObject(StaticVariable.CURRENCY_SELECTED, Currency.class) != null){
+            Currency curr = simpleCache.getObject(StaticVariable.CURRENCY_SELECTED, Currency.class);
+            currency = curr.getSymbol();
+        }
+
+        return currency;
+    }
+
     private String numberFormat(Number number){
         NumberFormat formatter = NumberFormat.getCurrencyInstance();
-        return formatter.format(number);
+        DecimalFormatSymbols decimalFormatSymbols = ((DecimalFormat) formatter).getDecimalFormatSymbols();
+        decimalFormatSymbols.setCurrencySymbol(currencySymbol);
+        ((DecimalFormat) formatter).setDecimalFormatSymbols(decimalFormatSymbols);
+        String nominal =  formatter.format(number).trim();
+        return nominal;
     }
 
     @Override
@@ -367,7 +388,6 @@ public class HomeFragment extends Fragment implements OnCalendarSelectedListener
             content.containerFabPayment.animate().alpha(0.0f).setDuration(300);
             content.containerFabIncome.setVisibility(View.INVISIBLE);
             content.containerFabPayment.setVisibility(View.INVISIBLE);
-
 //            content.fabTamb.ah.animate().rotation(0);
         }else{
             content.containerFabIncome.setVisibility(View.VISIBLE);

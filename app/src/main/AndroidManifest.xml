@@ -27,6 +27,8 @@
 
         <activity android:name=".Views.Activities.PrivacyPolicyActivity"
             android:screenOrientation="portrait"/>
+        <activity android:name=".Views.Activities.CurrencyActivity"
+            android:screenOrientation="portrait"/>
     </application>
 
 </manifest>

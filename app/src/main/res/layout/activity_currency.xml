@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:orientation="vertical" android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/background_activity"
+        android:focusableInTouchMode="true">
+
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            app:cardElevation="3dp"
+            app:cardBackgroundColor="@android:color/white"
+            app:cardCornerRadius="0dp">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <android.support.v7.widget.AppCompatImageButton
+                    android:id="@+id/btn_back"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_centerVertical="true"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@drawable/ic_arrow_back"
+                    android:tint="#d9000000"/>
+
+                <android.support.v7.widget.AppCompatEditText
+                    android:imeOptions="actionSearch"
+                    android:inputType="text"
+                    android:id="@+id/edit_search"
+                    android:background="@android:color/transparent"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_toRightOf="@+id/btn_back"
+                    android:layout_toEndOf="@+id/btn_back"
+                    android:layout_toLeftOf="@+id/btn_clear"
+                    android:layout_toStartOf="@+id/btn_clear"
+                    android:layout_centerVertical="true"
+                    android:gravity="start|left|center_vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="16sp"
+                    android:fontFamily="sans-serif"
+                    android:textStyle="normal"
+                    android:textColor="#d9000000"
+                    android:hint="Search"
+                    android:maxLines="1"/>
+
+                <android.support.v7.widget.AppCompatImageButton
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:id="@+id/btn_clear"
+                    android:layout_marginRight="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:layout_centerVertical="true"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@drawable/ic_clear"
+                    android:tint="#d9000000"/>
+
+            </RelativeLayout>
+
+        </android.support.v7.widget.CardView>
+
+        <FrameLayout
+            android:orientation="vertical" android:layout_width="match_parent"
+            android:clickable="true"
+            android:layout_height="40dp"
+            android:paddingRight="16dp"
+            android:paddingEnd="16dp"
+            android:paddingStart="16dp"
+            android:paddingLeft="16dp">
+
+            <TextView
+                android:textStyle="bold"
+                android:id="@+id/txt_nama"
+                android:layout_gravity="center_vertical"
+                android:textColor="@android:color/black"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="United States Dollar"/>
+
+            <TextView
+                android:textStyle="bold"
+                android:id="@+id/txt_symbol"
+                android:layout_gravity="end|center_vertical"
+                android:textColor="@android:color/black"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="$"/>
+
+            <View
+                android:layout_gravity="bottom"
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:background="@android:color/darker_gray"/>
+
+        </FrameLayout>
+
+        <android.support.v7.widget.RecyclerView
+            android:layout_marginTop="5dp"
+            android:id="@+id/list"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+    </LinearLayout>
+</layout>

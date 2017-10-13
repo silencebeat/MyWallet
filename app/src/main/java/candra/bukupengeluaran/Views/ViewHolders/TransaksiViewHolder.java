@@ -5,6 +5,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 import java.math.BigDecimal;
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import java.text.NumberFormat;
 
 import candra.bukupengeluaran.Entities.Model.TransaksiModel;
@@ -24,9 +26,12 @@ public class TransaksiViewHolder extends RecyclerView.ViewHolder {
         content = DataBindingUtil.bind(itemView);
     }
 
-    public void onBind(final TransaksiModel model, final OnDeleteRecordListener listener){
+    public void onBind(final TransaksiModel model, final OnDeleteRecordListener listener, String currencySymbol){
         NumberFormat formatter = NumberFormat.getCurrencyInstance();
-        String nominal =  formatter.format(new BigDecimal(model.getJumlah()));
+        DecimalFormatSymbols decimalFormatSymbols = ((DecimalFormat) formatter).getDecimalFormatSymbols();
+        decimalFormatSymbols.setCurrencySymbol(currencySymbol);
+        ((DecimalFormat) formatter).setDecimalFormatSymbols(decimalFormatSymbols);
+        String nominal =  formatter.format(new BigDecimal(model.getJumlah())).trim();
         content.txtJumlah.setText(nominal);
         content.txtNama.setText(model.getNama());
 

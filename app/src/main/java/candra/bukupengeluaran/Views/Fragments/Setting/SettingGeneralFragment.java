@@ -17,6 +17,7 @@ import com.bumptech.glide.Glide;
 import com.kobakei.ratethisapp.RateThisApp;
 import com.onesignal.OneSignal;
 
+import candra.bukupengeluaran.Entities.Model.Currency;
 import candra.bukupengeluaran.Modules.Wireframe.Wireframe;
 import candra.bukupengeluaran.R;
 import candra.bukupengeluaran.Supports.Data.DBHelper;
@@ -47,6 +48,7 @@ public class SettingGeneralFragment extends Fragment implements View.OnClickList
         content.btnPrivacyPolicy.setOnClickListener(this);
         content.btnRatingApp.setOnClickListener(this);
         content.btnDeleteDatabase.setOnClickListener(this);
+        content.btnCurrency.setOnClickListener(this);
 
         boolean a = simpleCache.getBoolean(StaticVariable.IS_SUBSCRIBE_PUSH);
         content.switchPush.setChecked(a);
@@ -58,6 +60,19 @@ public class SettingGeneralFragment extends Fragment implements View.OnClickList
                 simpleCache.putBoolean(StaticVariable.IS_SUBSCRIBE_PUSH, isChecked);
             }
         });
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        setCurrency();
+    }
+
+    void setCurrency(){
+        if (simpleCache.getObject(StaticVariable.CURRENCY_SELECTED, Currency.class) != null){
+            Currency currency = simpleCache.getObject(StaticVariable.CURRENCY_SELECTED, Currency.class);
+            content.btnCurrency.setText(currency.getSymbol());
+        }
     }
 
     @Override
@@ -98,6 +113,8 @@ public class SettingGeneralFragment extends Fragment implements View.OnClickList
                     })
                     .setIcon(android.R.drawable.ic_dialog_alert)
                     .show();
+        }else if (v.getId() == content.btnCurrency.getId()){
+            Wireframe.getInstance().toCurrencyView(getContext());
         }
     }
 }

@@ -39,6 +39,7 @@ public class StaticVariable {
     public final static String ISLOGIN = "ISLOGIN";
     public final static String THEME_SELECTED_NAME = "THEME_SELECTED_NAME";
     public final static String IS_SUBSCRIBE_PUSH = "IS_SUBSCRIBE_PUSH";
+    public final static String CURRENCY_SELECTED = "CURRENCY_SELECTED";
 
     public static SortedMap<Currency, Locale> currencyLocaleMap;
 
