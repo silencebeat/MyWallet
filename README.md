@@ -1,7 +1,10 @@
 ## MyWallet
-Aplikasi pencatan pemasukan dan pengeluaran uang
+Manage your finances with ease
 ## Preview
 ![](https://github.com/silencebeat/MyWallet/blob/master/banner.png)
+## Update
+![](https://github.com/silencebeat/MyWallet/blob/master/update.png)
+- Add Currency setting
 ## Main Library
 - [Glide](https://github.com/bumptech/glide)
 - [MPAndroidChart](https://github.com/PhilJay/MPAndroidChart)
