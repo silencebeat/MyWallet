@@ -7,6 +7,7 @@ Manage your finances with ease
 - Add Currency setting
 ## Main Library
 - [Glide](https://github.com/bumptech/glide)
+- [Realm](https://realm.io/)
 - [MPAndroidChart](https://github.com/PhilJay/MPAndroidChart)
 
 ## Authors
