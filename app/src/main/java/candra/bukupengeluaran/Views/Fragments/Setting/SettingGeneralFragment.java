@@ -1,23 +1,47 @@
 package candra.bukupengeluaran.Views.Fragments.Setting;
 
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.databinding.DataBindingUtil;
-import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CompoundButton;
 
 import com.bumptech.glide.Glide;
+import com.google.android.gms.auth.api.Auth;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.auth.api.signin.GoogleSignInResult;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.common.api.ResultCallback;
+import com.google.android.gms.common.api.Status;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.FirebaseFirestoreSettings;
+import com.google.gson.Gson;
 import com.kobakei.ratethisapp.RateThisApp;
 import com.onesignal.OneSignal;
 
+import java.util.ArrayList;
+
 import candra.bukupengeluaran.Entities.Model.Currency;
+import candra.bukupengeluaran.Entities.Model.Firestore.Users;
+import candra.bukupengeluaran.Entities.Model.TransaksiModel;
+import candra.bukupengeluaran.Entities.Model.TransaksiModels;
 import candra.bukupengeluaran.Modules.Wireframe.Wireframe;
 import candra.bukupengeluaran.R;
 import candra.bukupengeluaran.Supports.Data.DBHelper;
@@ -25,20 +49,29 @@ import candra.bukupengeluaran.Supports.Data.SimpleCache;
 import candra.bukupengeluaran.Supports.Utils.StaticVariable;
 import candra.bukupengeluaran.databinding.FragmentSettingGeneralBinding;
 
+import static android.content.ContentValues.TAG;
+
 /**
  * Created by Candra Triyadi on 08/10/2017.
  */
 
-public class SettingGeneralFragment extends Fragment implements View.OnClickListener{
+public class SettingGeneralFragment extends Fragment implements View.OnClickListener, GoogleApiClient.OnConnectionFailedListener{
 
     FragmentSettingGeneralBinding content;
     SimpleCache simpleCache;
+    GoogleApiClient mGoogleApiClient;
+    static final int RC_SIGN_IN = 100;
+    FirebaseFirestore db;
+    ProgressDialog progressDialog;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         content = DataBindingUtil.inflate(inflater, R.layout.fragment_setting_general, container, false);
         simpleCache = new SimpleCache(getContext());
+        db = FirebaseFirestore.getInstance();
+        progressDialog = new ProgressDialog(getContext());
+        progressDialog.setCancelable(false);
         setView();
         return content.getRoot();
     }
@@ -49,6 +82,9 @@ public class SettingGeneralFragment extends Fragment implements View.OnClickList
         content.btnRatingApp.setOnClickListener(this);
         content.btnDeleteDatabase.setOnClickListener(this);
         content.btnCurrency.setOnClickListener(this);
+        content.btnGetFromCloud.setOnClickListener(this);
+        content.btnSaveToCloud.setOnClickListener(this);
+        content.btnLogout.setOnClickListener(this);
 
         boolean a = simpleCache.getBoolean(StaticVariable.IS_SUBSCRIBE_PUSH);
         content.switchPush.setChecked(a);
@@ -60,12 +96,38 @@ public class SettingGeneralFragment extends Fragment implements View.OnClickList
                 simpleCache.putBoolean(StaticVariable.IS_SUBSCRIBE_PUSH, isChecked);
             }
         });
+
+        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestEmail()
+                .build();
+
+        mGoogleApiClient = new GoogleApiClient.Builder(getContext())
+                .enableAutoManage(getActivity(), this)
+                .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
+                .build();
+
+        String email = simpleCache.getString(StaticVariable.EMAIL);
+        if ( email != null){
+            content.btnLogout.setVisibility(View.VISIBLE);
+            content.txtEmail.setText(email);
+        }else{
+            clear();
+        }
     }
 
     @Override
     public void onResume() {
         super.onResume();
         setCurrency();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if (mGoogleApiClient != null && mGoogleApiClient.isConnected()) {
+            mGoogleApiClient.stopAutoManage(getActivity());
+            mGoogleApiClient.disconnect();
+        }
     }
 
     void setCurrency(){
@@ -92,12 +154,7 @@ public class SettingGeneralFragment extends Fragment implements View.OnClickList
                 }
             }).start();
         }else if (v.getId() == content.btnDeleteDatabase.getId()){
-            AlertDialog.Builder builder;
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                builder = new AlertDialog.Builder(getContext(), android.R.style.Theme_Material_Dialog_Alert);
-            } else {
-                builder = new AlertDialog.Builder(getContext());
-            }
+            AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
             builder.setTitle("Delete database")
                     .setMessage("Are you sure you want to delete all database?")
                     .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
@@ -115,6 +172,144 @@ public class SettingGeneralFragment extends Fragment implements View.OnClickList
                     .show();
         }else if (v.getId() == content.btnCurrency.getId()){
             Wireframe.getInstance().toCurrencyView(getContext());
+        }else if (v.getId() == content.btnGetFromCloud.getId()){
+
+            if (isLogin()){
+                AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                builder.setTitle("Download from cloud")
+                        .setMessage("Are you sure?\nAll data in local database will be replace.")
+                        .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                downloadFromCloud();
+                            }
+                        })
+                        .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                            }
+                        })
+                        .setIcon(android.R.drawable.ic_dialog_alert)
+                        .show();
+
+            }else{
+                loginGoogle();
+            }
+
+        }else if (v.getId() == content.btnSaveToCloud.getId()){
+
+            if (isLogin()){
+                uploadToCloud();
+            }else{
+                loginGoogle();
+            }
+        }else if (v.getId() == content.btnLogout.getId()){
+            logoutGoogle();
         }
+    }
+
+    void uploadToCloud(){
+        progressDialog.setMessage("Uploading...");
+        progressDialog.show();
+
+        Users users = new Users(simpleCache.getString(StaticVariable.EMAIL), DBHelper.with(this).getAllJson());
+
+        db.collection("users").document(simpleCache.getString(StaticVariable.EMAIL))
+                .set(users)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Log.d(TAG, "DocumentSnapshot successfully written!");
+                        progressDialog.dismiss();
+                        Snackbar.make(getView(), "Data saved", Snackbar.LENGTH_LONG).show();
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.w(TAG, "Error writing document", e);
+                        progressDialog.dismiss();
+                        Snackbar.make(getView(), "Download error", Snackbar.LENGTH_LONG).show();
+                    }
+                });
+    }
+
+    void downloadFromCloud(){
+        progressDialog.setMessage("Downloading...");
+        progressDialog.show();
+        DocumentReference docRef = db.collection("users").document(simpleCache.getString(StaticVariable.EMAIL));
+        docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            @Override
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                progressDialog.dismiss();
+                if (documentSnapshot != null){
+                    Users users = documentSnapshot.toObject(Users.class);
+                    TransaksiModels transaksiModels =  new Gson().fromJson(users.getData(), TransaksiModels.class);
+                    ArrayList<TransaksiModel> list = transaksiModels.getList();
+                    DBHelper.with(SettingGeneralFragment.this).insertAll(list);
+                    Snackbar.make(getView(), "Data restored", Snackbar.LENGTH_LONG).show();
+                }else{
+                    Snackbar.make(getView(), "Download error", Snackbar.LENGTH_LONG).show();
+                }
+            }
+        });
+    }
+
+    boolean isLogin(){
+        boolean a = simpleCache.getBoolean(StaticVariable.ISLOGIN, false);
+        return a;
+    }
+
+    void loginGoogle(){
+        Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(mGoogleApiClient);
+        startActivityForResult(signInIntent, RC_SIGN_IN);
+    }
+
+    void logoutGoogle(){
+        Auth.GoogleSignInApi.signOut(mGoogleApiClient).setResultCallback(
+                new ResultCallback<Status>() {
+                    @Override
+                    public void onResult(Status status) {
+                        if (status.isSuccess()){
+                            clear();
+                        }
+                    }
+                });
+    }
+
+    @Override
+    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
+
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == RC_SIGN_IN) {
+            GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
+            handleSignInResult(result);
+        }
+    }
+
+    private void handleSignInResult(GoogleSignInResult result) {
+        if (result.isSuccess()) {
+            GoogleSignInAccount acct = result.getSignInAccount();
+            if (acct != null){
+                simpleCache.putString(StaticVariable.EMAIL,acct.getEmail());
+                simpleCache.putBoolean(StaticVariable.ISLOGIN, true);
+                content.btnLogout.setVisibility(View.VISIBLE);
+                content.txtEmail.setText(acct.getEmail());
+            }
+
+        } else {
+            clear();
+        }
+    }
+
+    private void clear(){
+        content.txtEmail.setText("*Google Account Required");
+        content.btnLogout.setVisibility(View.INVISIBLE);
+        simpleCache.putString(StaticVariable.EMAIL,null);
+        simpleCache.putBoolean(StaticVariable.ISLOGIN, false);
     }
 }

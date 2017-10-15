@@ -33,8 +33,8 @@ public class SettingFragment extends Fragment {
 
     void setView(){
         FragmentAdapter adapter = new FragmentAdapter(getChildFragmentManager(),true);
-        adapter.addFragment(new SettingThemeFragment(), "Theme");
         adapter.addFragment(new SettingGeneralFragment(), "General");
+        adapter.addFragment(new SettingThemeFragment(), "Theme");
         content.pager.setAdapter(adapter);
         content.tabs.post(new Runnable() {
             @Override

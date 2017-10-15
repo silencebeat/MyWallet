@@ -273,6 +273,10 @@ public class SimpleCache {
         return sharedPreferences.getBoolean(key, true);
     }
 
+    public boolean getBoolean(String key, boolean def) {
+        return sharedPreferences.getBoolean(key, def);
+    }
+
     public void putFloat(String key, float value) {
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putFloat(key, value);

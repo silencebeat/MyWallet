@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "505665570665",
+    "project_id": "my-wallet-77aa3"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:505665570665:android:283c8c435e92e5ba",
+        "android_client_info": {
+          "package_name": "com.my.wallet"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "505665570665-gk19tqt3cpjeiusbc46i85ik6obdb0lq.apps.googleusercontent.com",
+          "client_type": 3
+        },
+        {
+          "client_id": "505665570665-rqb66e2tmuq4sfgkhqneudv3vfdjld2e.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.my.wallet",
+            "certificate_hash": "f0b458fe5dbbcc68e6308cdb5b441432af2b51f7"
+          }
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBu1-ihKEdw37cRrwxuN4vQGMEpVjV4P6A"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 1
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

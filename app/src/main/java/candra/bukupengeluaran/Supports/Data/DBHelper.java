@@ -4,12 +4,16 @@ import android.app.Activity;
 import android.app.Application;
 import android.support.v4.app.Fragment;
 
-import java.math.BigDecimal;
+import com.google.gson.Gson;
+
+import java.util.ArrayList;
 import java.util.Calendar;
 
 import candra.bukupengeluaran.Entities.Model.TransaksiModel;
 import io.realm.Realm;
 import io.realm.RealmResults;
+import xyz.truenight.support.realm.RealmHook;
+import xyz.truenight.support.realm.RealmSupportGsonFactory;
 
 /**
  * Created by Candra Triyadi on 06/10/2017.
@@ -68,6 +72,22 @@ public class DBHelper {
 
     public RealmResults<TransaksiModel> getIncome(long millisTanggal){
         return realm.where(TransaksiModel.class).equalTo("timeMillis", millisTanggal).equalTo("stats", 1).findAll();
+    }
+
+    public RealmResults<TransaksiModel> getAll(){
+        return realm.where(TransaksiModel.class).findAll();
+    }
+
+    public String getAllJson(){
+        RealmResults<TransaksiModel> all = realm.where(TransaksiModel.class).findAll();
+        Gson gson = RealmSupportGsonFactory.create(new RealmHook() {
+            @Override
+            public Realm instance() {
+                return Realm.getDefaultInstance();
+            }
+        });
+
+        return "{\"list\"="+gson.toJson(all)+"}";
     }
 
     public void deleteRecordById(long id){
@@ -135,6 +155,13 @@ public class DBHelper {
         model.setMonth(calendar.get(Calendar.MONTH));
         model.setYear(calendar.get(Calendar.YEAR));
         realm.copyToRealmOrUpdate(model);
+        realm.commitTransaction();
+    }
+
+    public void insertAll(ArrayList<TransaksiModel> list){
+        realm.beginTransaction();
+        realm.deleteAll();
+        realm.insert(list);
         realm.commitTransaction();
     }
 

@@ -107,81 +107,214 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-                <RelativeLayout
-                    android:paddingLeft="16dp"
-                    android:paddingStart="16dp"
-                    android:foreground="?android:attr/selectableItemBackground"
+                <LinearLayout
+                    android:orientation="vertical"
                     android:layout_width="match_parent"
-                    android:layout_height="48dp">
+                    android:layout_height="wrap_content">
 
-                    <TextView
-                        android:layout_centerVertical="true"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textSize="16sp"
-                        android:fontFamily="sans-serif-medium"
-                        android:textStyle="normal"
-                        android:textColor="#d9000000"
-                        android:enabled="false"
-                        android:text="Clear Image Caches"/>
+                    <RelativeLayout
+                        android:paddingLeft="16dp"
+                        android:paddingStart="16dp"
+                        android:foreground="?android:attr/selectableItemBackground"
+                        android:layout_width="match_parent"
+                        android:layout_height="48dp">
 
-                    <android.support.v7.widget.AppCompatButton
-                        android:id="@+id/btn_delete_cache"
-                        android:clickable="true"
-                        android:background="?attr/selectableItemBackgroundBorderless"
-                        android:text="Delete"
-                        android:textColor="@color/green_text"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_centerVertical="true"
-                        android:layout_alignParentRight="true"
-                        android:layout_alignParentEnd="true" />
+                        <TextView
+                            android:layout_centerVertical="true"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="16sp"
+                            android:fontFamily="sans-serif-medium"
+                            android:textStyle="normal"
+                            android:textColor="#d9000000"
+                            android:enabled="false"
+                            android:text="Clear Image Caches"/>
 
-                </RelativeLayout>
+                        <android.support.v7.widget.AppCompatButton
+                            android:id="@+id/btn_delete_cache"
+                            android:clickable="true"
+                            android:background="?attr/selectableItemBackgroundBorderless"
+                            android:text="Delete"
+                            android:textColor="@color/green_text"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_centerVertical="true"
+                            android:layout_alignParentRight="true"
+                            android:layout_alignParentEnd="true" />
+
+                    </RelativeLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="0.5dp"
+                        android:background="@color/grey_line"/>
+
+                    <RelativeLayout
+                        android:paddingLeft="16dp"
+                        android:paddingStart="16dp"
+                        android:foreground="?android:attr/selectableItemBackground"
+                        android:layout_width="match_parent"
+                        android:layout_height="48dp">
+
+                        <TextView
+                            android:layout_centerVertical="true"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="16sp"
+                            android:fontFamily="sans-serif-medium"
+                            android:textStyle="normal"
+                            android:textColor="#d9000000"
+                            android:enabled="false"
+                            android:text="Clear Database"/>
+
+                        <android.support.v7.widget.AppCompatButton
+                            android:id="@+id/btn_delete_database"
+                            android:clickable="true"
+                            android:background="?attr/selectableItemBackgroundBorderless"
+                            android:text="Delete"
+                            android:textColor="@color/green_text"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_centerVertical="true"
+                            android:layout_alignParentRight="true"
+                            android:layout_alignParentEnd="true" />
+
+                    </RelativeLayout>
+
+                </LinearLayout>
 
             </android.support.v7.widget.CardView>
 
             <android.support.v7.widget.CardView
+                android:layout_marginTop="10dp"
                 android:layout_marginLeft="8dp"
                 android:layout_marginStart="8dp"
-                android:layout_marginRight="8dp"
                 android:layout_marginEnd="8dp"
-                app:cardElevation="0dp"
-                android:layout_marginTop="10dp"
+                android:layout_marginRight="8dp"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                app:cardBackgroundColor="#ffffff"
+                app:cardElevation="0dp">
 
-                <RelativeLayout
-                    android:paddingLeft="16dp"
-                    android:paddingStart="16dp"
-                    android:foreground="?android:attr/selectableItemBackground"
+                <LinearLayout
+                    android:layout_marginTop="10dp"
                     android:layout_width="match_parent"
-                    android:layout_height="48dp">
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
 
-                    <TextView
-                        android:layout_centerVertical="true"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textSize="16sp"
-                        android:fontFamily="sans-serif-medium"
-                        android:textStyle="normal"
-                        android:textColor="#d9000000"
-                        android:enabled="false"
-                        android:text="Clear Database"/>
+                    <FrameLayout
+                        android:paddingLeft="16dp"
+                        android:paddingStart="16dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
 
-                    <android.support.v7.widget.AppCompatButton
-                        android:id="@+id/btn_delete_database"
+                        <TextView
+                            android:layout_gravity="center_vertical"
+                            android:id="@+id/txt_email"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="12sp"
+                            android:fontFamily="sans-serif"
+                            android:textStyle="normal"
+                            android:textColor="@color/colorPrimary"
+                            android:text="*Google Account Required"
+                            />
+
+                        <android.support.v7.widget.AppCompatButton
+                            android:visibility="invisible"
+                            android:id="@+id/btn_logout"
+                            android:layout_gravity="end"
+                            android:clickable="true"
+                            android:background="?attr/selectableItemBackgroundBorderless"
+                            android:text="Sign out"
+                            android:textSize="12sp"
+                            android:textColor="@color/green_text"
+                            android:layout_width="wrap_content"
+                            android:layout_height="30dp"/>
+
+                    </FrameLayout>
+
+
+                    <LinearLayout
+                        android:id="@+id/btn_save_to_cloud"
+                        android:paddingTop="10dp"
+                        android:paddingBottom="10dp"
+                        android:paddingLeft="16dp"
+                        android:paddingStart="16dp"
+                        android:paddingRight="16dp"
+                        android:paddingEnd="16dp"
                         android:clickable="true"
-                        android:background="?attr/selectableItemBackgroundBorderless"
-                        android:text="Delete"
-                        android:textColor="@color/green_text"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_centerVertical="true"
-                        android:layout_alignParentRight="true"
-                        android:layout_alignParentEnd="true" />
+                        android:foreground="?android:attr/selectableItemBackground"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical">
 
-                </RelativeLayout>
+                        <ImageView
+                            android:padding="2dp"
+                            android:layout_width="25dp"
+                            android:layout_height="25dp"
+                            android:src="@drawable/ic_cloud_upload"/>
+
+                        <TextView
+                            android:layout_marginLeft="30dp"
+                            android:layout_marginStart="30dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="16sp"
+                            android:fontFamily="sans-serif"
+                            android:textStyle="normal"
+                            android:textColor="#d9000000"
+                            android:lineSpacingExtra="6sp"
+                            android:text="Save to Cloud"
+                            />
+
+                    </LinearLayout>
+
+                    <View
+                        android:layout_marginLeft="70dp"
+                        android:layout_marginStart="70dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@color/grey_line"/>
+
+                    <LinearLayout
+                        android:id="@+id/btn_get_from_cloud"
+                        android:paddingTop="10dp"
+                        android:paddingBottom="10dp"
+                        android:paddingLeft="16dp"
+                        android:paddingStart="16dp"
+                        android:paddingRight="16dp"
+                        android:paddingEnd="16dp"
+                        android:clickable="true"
+                        android:foreground="?android:attr/selectableItemBackground"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical">
+
+                        <ImageView
+                            android:padding="2dp"
+                            android:layout_width="25dp"
+                            android:layout_height="25dp"
+                            android:src="@drawable/ic_cloud_download"/>
+
+                        <TextView
+                            android:layout_marginLeft="30dp"
+                            android:layout_marginStart="30dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="16sp"
+                            android:fontFamily="sans-serif"
+                            android:textStyle="normal"
+                            android:textColor="#d9000000"
+                            android:lineSpacingExtra="6sp"
+                            android:text="Download from Cloud"
+                            />
+
+                    </LinearLayout>
+
+                </LinearLayout>
 
             </android.support.v7.widget.CardView>
 

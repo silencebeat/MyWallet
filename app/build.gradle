@@ -30,7 +30,21 @@ android {
     dataBinding {
         enabled = true
     }
+
+    packagingOptions {
+        exclude 'META-INF/NOTICE' // will not include NOTICE file
+        exclude 'META-INF/LICENSE' // will not include LICENSE file
+        // as noted by @Vishnuvathsan you may also need to include
+        // variations on the file name. It depends on your dependencies.
+        // Some other common variations on notice and license file names
+        exclude 'META-INF/notice'
+        exclude 'META-INF/notice.txt'
+        exclude 'META-INF/license'
+        exclude 'META-INF/license.txt'
+    }
 }
+
+
 
 repositories {
     maven {
@@ -51,7 +65,9 @@ dependencies {
     compile 'com.android.support:customtabs:25.3.1'
     compile 'com.android.support:design:25.3.1'
     compile 'com.android.support:recyclerview-v7:25.3.1'
-    compile 'com.google.android.gms:play-services-ads:10.0.1'
+    compile 'com.google.android.gms:play-services-ads:11.4.2'
+    compile 'com.google.android.gms:play-services-auth:11.4.2'
+    compile 'com.google.firebase:firebase-firestore:11.4.2'
     compile 'com.github.bumptech.glide:glide:3.7.0'
     compile 'com.google.code.gson:gson:2.8.0'
     compile 'org.jsoup:jsoup:1.10.2'
@@ -59,6 +75,9 @@ dependencies {
     compile 'io.github.kobakei:ratethisapp:1.2.0'
     compile 'com.onesignal:OneSignal:3.5.8'
     compile 'com.github.PhilJay:MPAndroidChart:v3.0.2'
+    compile 'xyz.truenight.support:gson-realm:1.2.0'
 
     testCompile 'junit:junit:4.12'
 }
+
+apply plugin: 'com.google.gms.google-services'

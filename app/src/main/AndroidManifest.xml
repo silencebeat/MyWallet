@@ -4,6 +4,7 @@
     package="candra.bukupengeluaran">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="com.samsung.android.providers.context.permission.WRITE_USE_APP_FEATURE_SURVEY"/>
     <uses-sdk tools:overrideLibrary="com.github.mikephil.charting.data.realm"/>
 
     <application
