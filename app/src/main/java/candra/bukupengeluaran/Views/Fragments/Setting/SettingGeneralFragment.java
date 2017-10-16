@@ -173,30 +173,12 @@ public class SettingGeneralFragment extends Fragment implements View.OnClickList
         }else if (v.getId() == content.btnCurrency.getId()){
             Wireframe.getInstance().toCurrencyView(getContext());
         }else if (v.getId() == content.btnGetFromCloud.getId()){
-
             if (isLogin()){
-                AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-                builder.setTitle("Download from cloud")
-                        .setMessage("Are you sure?\nAll data in local database will be replace.")
-                        .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int which) {
-                                downloadFromCloud();
-                            }
-                        })
-                        .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int which) {
-                                dialog.dismiss();
-                            }
-                        })
-                        .setIcon(android.R.drawable.ic_dialog_alert)
-                        .show();
-
+                downloadFromCloud();
             }else{
                 loginGoogle();
             }
-
         }else if (v.getId() == content.btnSaveToCloud.getId()){
-
             if (isLogin()){
                 uploadToCloud();
             }else{
@@ -228,13 +210,13 @@ public class SettingGeneralFragment extends Fragment implements View.OnClickList
                     public void onFailure(@NonNull Exception e) {
                         Log.w(TAG, "Error writing document", e);
                         progressDialog.dismiss();
-                        Snackbar.make(getView(), "Download error", Snackbar.LENGTH_LONG).show();
+                        Snackbar.make(getView(), "Backup error", Snackbar.LENGTH_LONG).show();
                     }
                 });
     }
 
     void downloadFromCloud(){
-        progressDialog.setMessage("Downloading...");
+        progressDialog.setMessage("Restoring data...");
         progressDialog.show();
         DocumentReference docRef = db.collection("users").document(simpleCache.getString(StaticVariable.EMAIL));
         docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
@@ -248,7 +230,7 @@ public class SettingGeneralFragment extends Fragment implements View.OnClickList
                     DBHelper.with(SettingGeneralFragment.this).insertAll(list);
                     Snackbar.make(getView(), "Data restored", Snackbar.LENGTH_LONG).show();
                 }else{
-                    Snackbar.make(getView(), "Download error", Snackbar.LENGTH_LONG).show();
+                    Snackbar.make(getView(), "Restoring failed", Snackbar.LENGTH_LONG).show();
                 }
             }
         });

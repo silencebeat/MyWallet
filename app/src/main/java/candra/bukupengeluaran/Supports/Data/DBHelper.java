@@ -160,8 +160,9 @@ public class DBHelper {
 
     public void insertAll(ArrayList<TransaksiModel> list){
         realm.beginTransaction();
-        realm.deleteAll();
-        realm.insert(list);
+//        realm.deleteAll();
+//        realm.insert(list);
+        realm.insertOrUpdate(list);
         realm.commitTransaction();
     }
 

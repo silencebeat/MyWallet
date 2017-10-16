@@ -266,7 +266,7 @@
                             android:textStyle="normal"
                             android:textColor="#d9000000"
                             android:lineSpacingExtra="6sp"
-                            android:text="Save to Cloud"
+                            android:text="Backup Data"
                             />
 
                     </LinearLayout>
@@ -309,7 +309,7 @@
                             android:textStyle="normal"
                             android:textColor="#d9000000"
                             android:lineSpacingExtra="6sp"
-                            android:text="Download from Cloud"
+                            android:text="Restore Data"
                             />
 
                     </LinearLayout>
