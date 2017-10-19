@@ -30,8 +30,6 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.FirebaseFirestoreException;
-import com.google.firebase.firestore.FirebaseFirestoreSettings;
 import com.google.gson.Gson;
 import com.kobakei.ratethisapp.RateThisApp;
 import com.onesignal.OneSignal;
@@ -123,11 +121,11 @@ public class SettingGeneralFragment extends Fragment implements View.OnClickList
 
     @Override
     public void onDestroy() {
-        super.onDestroy();
         if (mGoogleApiClient != null && mGoogleApiClient.isConnected()) {
             mGoogleApiClient.stopAutoManage(getActivity());
             mGoogleApiClient.disconnect();
         }
+        super.onDestroy();
     }
 
     void setCurrency(){
@@ -237,8 +235,7 @@ public class SettingGeneralFragment extends Fragment implements View.OnClickList
     }
 
     boolean isLogin(){
-        boolean a = simpleCache.getBoolean(StaticVariable.ISLOGIN, false);
-        return a;
+        return simpleCache.getBoolean(StaticVariable.ISLOGIN, false);
     }
 
     void loginGoogle(){
