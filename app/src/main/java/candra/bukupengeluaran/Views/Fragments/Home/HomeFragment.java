@@ -203,7 +203,7 @@ public class HomeFragment extends Fragment implements OnCalendarSelectedListener
         ArrayList<TransaksiModel> arrayList = new ArrayList(DBHelper.with(this).getPayment(millis));
 
         if (arrayList.isEmpty()){
-            content.txtTitleParent.setText(currencySymbol+"0");
+            content.txtTitleParent.setText(currencySymbol+" 0");
         }else{
             Number number = DBHelper.with(this).getTotalByDay(millis, 0);
             content.txtTitleParent.setText(numberFormat(number));
@@ -226,7 +226,7 @@ public class HomeFragment extends Fragment implements OnCalendarSelectedListener
         ArrayList<TransaksiModel> arrayList = new ArrayList(DBHelper.with(this).getIncome(millis));
 
         if (arrayList.isEmpty()){
-            content.txtTitleIncome.setText(currencySymbol+"0");
+            content.txtTitleIncome.setText(currencySymbol+" 0");
         }else{
             Number number = DBHelper.with(this).getTotalByDay(millis, 1);
             content.txtTitleIncome.setText(numberFormat(number));
@@ -259,7 +259,7 @@ public class HomeFragment extends Fragment implements OnCalendarSelectedListener
     private String numberFormat(Number number){
         NumberFormat formatter = NumberFormat.getCurrencyInstance();
         DecimalFormatSymbols decimalFormatSymbols = ((DecimalFormat) formatter).getDecimalFormatSymbols();
-        decimalFormatSymbols.setCurrencySymbol(currencySymbol);
+        decimalFormatSymbols.setCurrencySymbol(currencySymbol+" ");
         ((DecimalFormat) formatter).setDecimalFormatSymbols(decimalFormatSymbols);
         String nominal =  formatter.format(number).trim();
         return nominal;

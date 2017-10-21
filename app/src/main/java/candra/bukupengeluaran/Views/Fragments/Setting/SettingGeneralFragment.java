@@ -55,12 +55,17 @@ import static android.content.ContentValues.TAG;
 
 public class SettingGeneralFragment extends Fragment implements View.OnClickListener, GoogleApiClient.OnConnectionFailedListener{
 
+    enum StatusData {
+        restore,backup
+    }
+
     FragmentSettingGeneralBinding content;
     SimpleCache simpleCache;
     GoogleApiClient mGoogleApiClient;
     static final int RC_SIGN_IN = 100;
     FirebaseFirestore db;
     ProgressDialog progressDialog;
+    StatusData statusData = StatusData.backup;
 
     @Nullable
     @Override
@@ -171,12 +176,14 @@ public class SettingGeneralFragment extends Fragment implements View.OnClickList
         }else if (v.getId() == content.btnCurrency.getId()){
             Wireframe.getInstance().toCurrencyView(getContext());
         }else if (v.getId() == content.btnGetFromCloud.getId()){
+            statusData = StatusData.restore;
             if (isLogin()){
                 downloadFromCloud();
             }else{
                 loginGoogle();
             }
         }else if (v.getId() == content.btnSaveToCloud.getId()){
+            statusData = StatusData.backup;
             if (isLogin()){
                 uploadToCloud();
             }else{
@@ -278,6 +285,11 @@ public class SettingGeneralFragment extends Fragment implements View.OnClickList
                 simpleCache.putBoolean(StaticVariable.ISLOGIN, true);
                 content.btnLogout.setVisibility(View.VISIBLE);
                 content.txtEmail.setText(acct.getEmail());
+                if (statusData == StatusData.backup){
+                    uploadToCloud();
+                }else if (statusData == StatusData.restore){
+                    downloadFromCloud();
+                }
             }
 
         } else {

@@ -29,7 +29,7 @@ public class TransaksiViewHolder extends RecyclerView.ViewHolder {
     public void onBind(final TransaksiModel model, final OnDeleteRecordListener listener, String currencySymbol){
         NumberFormat formatter = NumberFormat.getCurrencyInstance();
         DecimalFormatSymbols decimalFormatSymbols = ((DecimalFormat) formatter).getDecimalFormatSymbols();
-        decimalFormatSymbols.setCurrencySymbol(currencySymbol);
+        decimalFormatSymbols.setCurrencySymbol(currencySymbol+" ");
         ((DecimalFormat) formatter).setDecimalFormatSymbols(decimalFormatSymbols);
         String nominal =  formatter.format(new BigDecimal(model.getJumlah())).trim();
         content.txtJumlah.setText(nominal);

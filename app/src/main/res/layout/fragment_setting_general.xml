@@ -3,7 +3,8 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
     <android.support.v4.widget.NestedScrollView
         android:layout_height="wrap_content"
-        android:layout_width="match_parent">
+        android:layout_width="match_parent"
+        android:background="@color/background_activity">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -34,10 +35,9 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textSize="16sp"
-                        android:fontFamily="sans-serif-medium"
+                        android:fontFamily="sans-serif"
                         android:textStyle="normal"
                         android:textColor="#d9000000"
-                        android:enabled="false"
                         android:text="Push Notification"/>
 
                     <android.support.v7.widget.SwitchCompat
@@ -66,6 +66,8 @@
                 <RelativeLayout
                     android:paddingLeft="16dp"
                     android:paddingStart="16dp"
+                    android:paddingEnd="16dp"
+                    android:paddingRight="16dp"
                     android:foreground="?android:attr/selectableItemBackground"
                     android:layout_width="match_parent"
                     android:layout_height="48dp">
@@ -75,19 +77,21 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textSize="16sp"
-                        android:fontFamily="sans-serif-medium"
+                        android:fontFamily="sans-serif"
                         android:textStyle="normal"
                         android:textColor="#d9000000"
-                        android:enabled="false"
                         android:text="Currency"/>
 
-                    <android.support.v7.widget.AppCompatButton
+                    <android.support.v7.widget.AppCompatTextView
+                        android:textSize="16sp"
+                        android:fontFamily="sans-serif"
                         android:id="@+id/btn_currency"
                         android:clickable="true"
                         android:background="?attr/selectableItemBackgroundBorderless"
                         android:text="$"
+                        android:gravity="center"
                         android:textColor="@color/green_text"
-                        android:layout_width="wrap_content"
+                        android:layout_width="40dp"
                         android:layout_height="match_parent"
                         android:layout_centerVertical="true"
                         android:layout_alignParentRight="true"
@@ -124,10 +128,9 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:textSize="16sp"
-                            android:fontFamily="sans-serif-medium"
+                            android:fontFamily="sans-serif"
                             android:textStyle="normal"
                             android:textColor="#d9000000"
-                            android:enabled="false"
                             android:text="Clear Image Caches"/>
 
                         <android.support.v7.widget.AppCompatButton
@@ -161,10 +164,9 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:textSize="16sp"
-                            android:fontFamily="sans-serif-medium"
+                            android:fontFamily="sans-serif"
                             android:textStyle="normal"
                             android:textColor="#d9000000"
-                            android:enabled="false"
                             android:text="Clear Database"/>
 
                         <android.support.v7.widget.AppCompatButton
@@ -265,7 +267,6 @@
                             android:fontFamily="sans-serif"
                             android:textStyle="normal"
                             android:textColor="#d9000000"
-                            android:lineSpacingExtra="6sp"
                             android:text="Backup Data"
                             />
 
@@ -308,7 +309,6 @@
                             android:fontFamily="sans-serif"
                             android:textStyle="normal"
                             android:textColor="#d9000000"
-                            android:lineSpacingExtra="6sp"
                             android:text="Restore Data"
                             />
 
@@ -364,7 +364,6 @@
                             android:fontFamily="sans-serif"
                             android:textStyle="normal"
                             android:textColor="#d9000000"
-                            android:lineSpacingExtra="6sp"
                             android:text="Privacy Policy"
                             />
 
@@ -409,7 +408,6 @@
                             android:fontFamily="sans-serif"
                             android:textStyle="normal"
                             android:textColor="#d9000000"
-                            android:lineSpacingExtra="6sp"
                             android:text="Give Feedback" />
 
                         <TextView
