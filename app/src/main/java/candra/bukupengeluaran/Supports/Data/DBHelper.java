@@ -91,31 +91,45 @@ public class DBHelper {
     }
 
     public void deleteRecordById(long id){
-        TransaksiModel model = realm.where(TransaksiModel.class).equalTo("id", id).findFirst();
+        TransaksiModel model = realm.where(TransaksiModel.class)
+                .equalTo("id", id)
+                .findFirst();
         realm.beginTransaction();
         model.deleteFromRealm();
         realm.commitTransaction();
     }
 
     public Number getTotalByDay(long value, int stats){
-        Number sum = realm.where(TransaksiModel.class).equalTo("timeMillis", value).equalTo("stats",stats).sum("jumlah");
+        Number sum = realm.where(TransaksiModel.class)
+                .equalTo("timeMillis", value)
+                .equalTo("stats",stats)
+                .sum("jumlah");
         return sum;
     }
 
     public Number getTotalByDateMonthYear(float date, float month, float year, int stats){
-        Number sum = realm.where(TransaksiModel.class).equalTo("date", date).equalTo("month", month)
+        Number sum = realm.where(TransaksiModel.class)
+                .equalTo("date", date)
+                .equalTo("month", month)
                 .equalTo("year", year)
                 .equalTo("stats",stats).sum("jumlah");
         return sum;
     }
 
-    public Number getTotalByMonth(float value, int stats){
-        Number sum = realm.where(TransaksiModel.class).equalTo("month", value).equalTo("stats",stats).sum("jumlah");
+    public Number getTotalByMonth(float month, float year, int stats){
+        Number sum = realm.where(TransaksiModel.class)
+                .equalTo("month", month)
+                .equalTo("year", year)
+                .equalTo("stats",stats)
+                .sum("jumlah");
         return sum;
     }
 
     public Number getTotalByYear(float value, int stats){
-        Number sum = realm.where(TransaksiModel.class).equalTo("year", value).equalTo("stats",stats).sum("jumlah");
+        Number sum = realm.where(TransaksiModel.class)
+                .equalTo("year", value)
+                .equalTo("stats",stats)
+                .sum("jumlah");
         return sum;
     }
 

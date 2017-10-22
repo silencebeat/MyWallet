@@ -51,5 +51,8 @@
     <string name="good_job">Good job Mate!</string>
 
     <string name="cannot_empty">Hey mate.. If you want to add something, please fill first.</string>
+    <string name="pay_attention">Pay attention to your finances.</string>
+    <string name="good_condition">Keep the good work!</string>
+    <string name="no_data">You need more income.</string>
 
 </resources>

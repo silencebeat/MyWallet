@@ -75,7 +75,6 @@ public class HomeFragment extends Fragment implements OnCalendarSelectedListener
     long millisSelected;
     ListTheme listTheme;
     Handler handler;
-    String currencySymbol;
 
     @Override
     public void onDestroy() {
@@ -96,7 +95,6 @@ public class HomeFragment extends Fragment implements OnCalendarSelectedListener
         handler = new Handler();
         listTheme = new ListTheme();
         KEYWORD = listTheme.getArrayList().get(0).getName();
-        currencySymbol = getCurrencySymbol();
 
         if (simpleCache.getString(StaticVariable.THEME_SELECTED_NAME)!= null){
             KEYWORD = simpleCache.getString(StaticVariable.THEME_SELECTED_NAME);
@@ -202,18 +200,14 @@ public class HomeFragment extends Fragment implements OnCalendarSelectedListener
 
         ArrayList<TransaksiModel> arrayList = new ArrayList(DBHelper.with(this).getPayment(millis));
 
-        if (arrayList.isEmpty()){
-            content.txtTitleParent.setText(currencySymbol+" 0");
-        }else{
-            Number number = DBHelper.with(this).getTotalByDay(millis, 0);
-            content.txtTitleParent.setText(numberFormat(number));
-        }
+        Number number = DBHelper.with(this).getTotalByDay(millis, 0);
+        content.txtTitleParent.setText(numberFormat(number));
 
         Adapter<TransaksiModel, TransaksiViewHolder> adapter = new Adapter<TransaksiModel, TransaksiViewHolder>(R.layout.item_transaksi,
                 TransaksiViewHolder.class, TransaksiModel.class, arrayList) {
             @Override
             protected void bindView(TransaksiViewHolder holder, TransaksiModel model, int position) {
-                holder.onBind(model, HomeFragment.this, currencySymbol);
+                holder.onBind(model, HomeFragment.this, getCurrencySymbol());
             }
         };
 
@@ -225,18 +219,14 @@ public class HomeFragment extends Fragment implements OnCalendarSelectedListener
     private void loadDataPemasukan(long millis){
         ArrayList<TransaksiModel> arrayList = new ArrayList(DBHelper.with(this).getIncome(millis));
 
-        if (arrayList.isEmpty()){
-            content.txtTitleIncome.setText(currencySymbol+" 0");
-        }else{
-            Number number = DBHelper.with(this).getTotalByDay(millis, 1);
-            content.txtTitleIncome.setText(numberFormat(number));
-        }
+        Number number = DBHelper.with(this).getTotalByDay(millis, 1);
+        content.txtTitleIncome.setText(numberFormat(number));
 
         Adapter<TransaksiModel, TransaksiViewHolder> adapter = new Adapter<TransaksiModel, TransaksiViewHolder>(R.layout.item_transaksi,
                 TransaksiViewHolder.class, TransaksiModel.class, arrayList) {
             @Override
             protected void bindView(TransaksiViewHolder holder, TransaksiModel model, int position) {
-                holder.onBind(model, HomeFragment.this, currencySymbol);
+                holder.onBind(model, HomeFragment.this, getCurrencySymbol());
             }
         };
 
@@ -259,7 +249,7 @@ public class HomeFragment extends Fragment implements OnCalendarSelectedListener
     private String numberFormat(Number number){
         NumberFormat formatter = NumberFormat.getCurrencyInstance();
         DecimalFormatSymbols decimalFormatSymbols = ((DecimalFormat) formatter).getDecimalFormatSymbols();
-        decimalFormatSymbols.setCurrencySymbol(currencySymbol+" ");
+        decimalFormatSymbols.setCurrencySymbol(getCurrencySymbol()+" ");
         ((DecimalFormat) formatter).setDecimalFormatSymbols(decimalFormatSymbols);
         String nominal =  formatter.format(number).trim();
         return nominal;

@@ -15,12 +15,18 @@ import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
+import candra.bukupengeluaran.Entities.Model.Currency;
 import candra.bukupengeluaran.R;
 import candra.bukupengeluaran.Supports.Data.DBHelper;
+import candra.bukupengeluaran.Supports.Data.SimpleCache;
+import candra.bukupengeluaran.Supports.Utils.StaticVariable;
 import candra.bukupengeluaran.databinding.FragmentReportBinding;
 
 /**
@@ -33,6 +39,7 @@ public class ReportFragment extends Fragment implements View.OnClickListener{
     String arrMonth[];
     int positionCalendarRange = 0;
     setChart setChart;
+    SimpleCache simpleCache;
 
     @Nullable
     @Override
@@ -43,6 +50,7 @@ public class ReportFragment extends Fragment implements View.OnClickListener{
     }
 
     void setView(){
+        simpleCache = new SimpleCache(getContext());
         content.btnNext.setOnClickListener(this);
         content.btnPrev.setOnClickListener(this);
         arrMonth = getActivity().getResources().getStringArray(R.array.arr_month);
@@ -88,7 +96,7 @@ public class ReportFragment extends Fragment implements View.OnClickListener{
         }
 
 
-        setChart = new setChart(1,tanggal, datasIncome, datasPayment);
+        setChart = new setChart(1,tanggal,anotherMonth.get(Calendar.MONTH), anotherMonth.get(Calendar.YEAR), datasIncome, datasPayment);
         setChart.execute();
     }
 
@@ -125,8 +133,9 @@ public class ReportFragment extends Fragment implements View.OnClickListener{
         List<Entry> entriesPayment;
         Entries models;
         int start, end;
+        int month, year;
 
-        public setChart(int start, int end,ArrayList<Data> arrayListIncome, ArrayList<Data> arrayListPayment){
+        public setChart(int start, int end, int month, int year, ArrayList<Data> arrayListIncome, ArrayList<Data> arrayListPayment){
             this.arrayListIncome = arrayListIncome;
             this.arrayListPayment = arrayListPayment;
             models = new Entries();
@@ -134,6 +143,8 @@ public class ReportFragment extends Fragment implements View.OnClickListener{
             entriesPayment = new ArrayList<>();
             this.start = start;
             this.end = end;
+            this.month = month;
+            this.year = year;
         }
 
         @Override
@@ -164,7 +175,7 @@ public class ReportFragment extends Fragment implements View.OnClickListener{
             List<ILineDataSet> dataSets = new ArrayList<>();
 
             if (data.getEntriesIncome().size()>0){
-                LineDataSet dataSet = new LineDataSet(data.getEntriesIncome(), "Income(.000)");
+                LineDataSet dataSet = new LineDataSet(data.getEntriesIncome(), "Income (.000)");
                 dataSet.setDrawValues(false);
                 dataSet.setColor(Color.parseColor("#4caf50"));
                 dataSet.setCircleColor(Color.parseColor("#4caf50"));
@@ -172,7 +183,7 @@ public class ReportFragment extends Fragment implements View.OnClickListener{
             }
 
             if (data.getEntriesPayment().size()>0){
-                LineDataSet dataSet2 = new LineDataSet(data.getEntriesPayment(), "Payment(.000)");
+                LineDataSet dataSet2 = new LineDataSet(data.getEntriesPayment(), "Payment (.000)");
                 dataSet2.setDrawValues(false);
                 dataSet2.setColor(Color.parseColor("#f44336"));
                 dataSet2.setCircleColor(Color.parseColor("#f44336"));
@@ -188,7 +199,41 @@ public class ReportFragment extends Fragment implements View.OnClickListener{
             content.chart.setPinchZoom(false);
             content.chart.setDragEnabled(false);
             content.chart.invalidate();
+
+            Number income = DBHelper.with(ReportFragment.this).getTotalByMonth(month, year, 1);
+            Number payment = DBHelper.with(ReportFragment.this).getTotalByMonth(month, year, 0);
+
+            content.txtTotalIncome.setText(numberFormat(income));
+            content.txtTotalPayment.setText(numberFormat(payment));
+
+            if (income.floatValue() > payment.floatValue()){
+                content.txtInfo.setText(getResources().getString(R.string.good_condition));
+            }else if (payment.floatValue() > income.floatValue()){
+                content.txtInfo.setText(getResources().getString(R.string.pay_attention));
+            }else if (payment.floatValue() == income.floatValue()){
+                content.txtInfo.setText(getResources().getString(R.string.no_data));
+            }
         }
+    }
+
+    private String getCurrencySymbol(){
+        String currency = "$";
+
+        if (simpleCache.getObject(StaticVariable.CURRENCY_SELECTED, Currency.class) != null){
+            Currency curr = simpleCache.getObject(StaticVariable.CURRENCY_SELECTED, Currency.class);
+            currency = curr.getSymbol();
+        }
+
+        return currency;
+    }
+
+    private String numberFormat(Number number){
+        NumberFormat formatter = NumberFormat.getCurrencyInstance();
+        DecimalFormatSymbols decimalFormatSymbols = ((DecimalFormat) formatter).getDecimalFormatSymbols();
+        decimalFormatSymbols.setCurrencySymbol(getCurrencySymbol()+" ");
+        ((DecimalFormat) formatter).setDecimalFormatSymbols(decimalFormatSymbols);
+        String nominal =  formatter.format(number).trim();
+        return nominal;
     }
 
     class Entries{
