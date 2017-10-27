@@ -18,8 +18,8 @@ import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.RequestOptions;
 
-import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.text.NumberFormat;
@@ -104,7 +104,7 @@ public class HomeFragment extends Fragment implements OnCalendarSelectedListener
 
         if (simpleCache.getList(KEYWORD).size() > 0){
             collectionImage = simpleCache.getList(KEYWORD);
-            Collections.shuffle(collectionImage);
+            //Collections.shuffle(collectionImage);
             refreshBackground();
         }else{
             parseImagePresenter.getData(KEYWORD);
@@ -344,9 +344,12 @@ public class HomeFragment extends Fragment implements OnCalendarSelectedListener
     void refreshBackground(){
 
         if (collectionImage.size() > 0){
+            RequestOptions requestOptions = new RequestOptions();
+            requestOptions.diskCacheStrategy(DiskCacheStrategy.ALL);
             Glide.with(getActivity())
+                    .setDefaultRequestOptions(requestOptions)
+                    .asBitmap()
                     .load(collectionImage.get(indexBackgroundPosition))
-                    .diskCacheStrategy(DiskCacheStrategy.ALL)
                     .into(content.imgBackground);
         }
     }

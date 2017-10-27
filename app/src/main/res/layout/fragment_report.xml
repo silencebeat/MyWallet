@@ -178,7 +178,6 @@
                             android:fontFamily="sans-serif"
                             android:textStyle="normal"
                             android:textColor="#d9000000"
-                            android:text="Rp. 500.000"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content" />
 
@@ -208,7 +207,6 @@
                             android:fontFamily="sans-serif"
                             android:textStyle="normal"
                             android:textColor="#d9000000"
-                            android:text="Rp. 500.000"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content" />
 
