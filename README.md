@@ -10,9 +10,7 @@ Manage your finances with ease. You can backup/restore data and open it into ano
 - change background with 18 themes available. (need internet connection to show the image background)
 - backup/restore data into cloud server (Requirement: google login)
 ## Update
-![](https://github.com/silencebeat/MyWallet/blob/master/banner_firestore.png)
-- Add backup/restore data
-- fix some layout issue
+- Ready for Android studio 3.0
 ## Main Library
 - [Glide](https://github.com/bumptech/glide)
 - [Realm](https://realm.io/)
