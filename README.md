@@ -1,5 +1,7 @@
 ## MyWallet
 Manage your finances with ease. You can backup/restore data and open it into another android device.
+## Download on Google Play
+[![Download on Google Play](https://github.com/silencebeat/MyWallet/blob/master/btn_google_play.png "")](https://play.google.com/store/apps/details?id=com.my.wallet)
 ## Preview
 ![](https://github.com/silencebeat/MyWallet/blob/master/banner.png)
 ## Feature
