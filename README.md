@@ -4,6 +4,8 @@ Manage your finances with ease. You can backup/restore data and open it into ano
 [Download here](http://bit.ly/2A6odML)
 ## Preview
 ![](https://github.com/silencebeat/MyWallet/blob/master/banner.png)
+![](https://github.com/silencebeat/MyWallet/blob/master/update.png)
+![](https://github.com/silencebeat/MyWallet/blob/master/banner_firestore.png)
 ## Feature
 - Fresh UI/UX
 - Add/remove income and payment data
