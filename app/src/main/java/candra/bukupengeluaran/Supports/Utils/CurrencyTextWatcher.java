@@ -23,7 +23,7 @@ public class CurrencyTextWatcher implements TextWatcher {
 
     public synchronized void afterTextChanged(Editable s) {
 
-        String str = s.toString();
+        /*String str = s.toString();
         if (str.length() < prefix.length()) {
             mEditText.setText(prefix);
             mEditText.setSelection(prefix.length());
@@ -46,7 +46,7 @@ public class CurrencyTextWatcher implements TextWatcher {
         }
 
         mEditText.setText(formattedString);
-        mEditText.setSelection(formattedString.length());
+        mEditText.setSelection(formattedString.length());*/
     }
 
     public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
